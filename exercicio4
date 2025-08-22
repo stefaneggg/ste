@@ -1,0 +1,65 @@
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+
+#Definir  intervalo
+a = 0
+b = 10
+k= 1
+
+#Passo
+n= 20
+h= (b-a)/n
+
+def dydt(t,y,v): #definicao da derivada
+    return v
+
+def dvdt(t,y,v): #definicao da derivada
+    return -k*y
+
+#def analiticav(t):
+    #return  np.sqrt(g*m/cd) * np.tanh((np.sqrt((g*cd)/m))*t)
+
+#def analiticax(t):
+    #return  (m/cd) * np.log(np.cosh(((((g*cd)/m)**(1/2))*t)))
+
+#Pré-alocação de varáves
+t = np.linspace(a,b,n)
+v = np.zeros(n)
+y = np.zeros(n)
+
+Ept = np.zeros(n)
+
+#Definição da Condição Inicial
+y[0] = 1
+v[0] = 1
+
+#Método de Euler
+for i in range (0,n-1):
+    v[i+1]= v[i] + h*dvdt(t[i],y[i],v[i])
+    y[i+1] = y[i] + h * dydt(t[i], y[i], v[i])
+    #Ept[i+1] = abs((analiticav(t[i+1]) - v[i+1])/analiticav(t[i+1]))*100
+    #Ept[i+1] = abs((analiticax(t[i + 1]) - x[i + 1]) / analiticax(t[i + 1])) * 100
+
+
+print(Ept)
+
+#Grafico
+plt.plot(t,v,'or',label='$v(t)$')
+#plt.plot(t, analiticav(t),'--ob',label='Analitica')
+plt.plot(t,y,'ob',label='$y(t)$')
+#plt.plot(t, analiticax(t),'--ob',label='Analitica')
+plt.legend()
+plt.show()
+
+
+#Grafico 2
+"""plt.plot(t, Ept,'sg',label='Ept')
+plt.show()
+
+
+plt.plot(dxdt(t,x,v))
+plt.show()
+
+plt.plot(analiticav(t))
+plt.show()"""
